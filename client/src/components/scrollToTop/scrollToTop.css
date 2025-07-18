@@ -1,0 +1,39 @@
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  animation: bounce 1.5s infinite;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.scroll-to-top-inner {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.wave-svg {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+}
+
+.wave-fill {
+  fill: #03045e;
+  transition: all 0.4s ease-out;
+}
+
+.top-icon {
+  font-size: 1.2rem;
+  color: white;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.scroll-to-top:hover .top-icon {
+  font-size: 0.9rem;
+}
