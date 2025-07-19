@@ -1,0 +1,55 @@
+.add-book-screen {
+    min-height: 100vh;
+    background: linear-gradient(90deg, #f0f4ff 0%, #fff5f9 40%, #f0f4ff 65%, #e8ffea 95%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px;
+}
+
+.add-book-container {
+    width: 100% !important;
+    max-width: 500px !important;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    border-radius: 0 22px !important;
+    padding: 40px 25px;
+}
+
+.add-book-heading {
+    color: #03045e;
+}
+
+.form-data .form-control {
+    border-radius: 8px;
+    font-size: 0.95rem;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    transition: border-color 0.3s ease;
+}
+
+.form-data .form-control:focus {
+    border-color: #03045e;
+    box-shadow: 0 0 0 0.15rem rgba(3, 4, 94, 0.2);
+}
+
+.submit-btn {
+    background-color: #03045e !important;
+    border: none !important;
+    font-weight: 600 !important;
+    border-radius: 0 15px !important;
+    margin-top: 20px !important;
+    transition: background-color 0.3s, transform 0.2s !important;
+}
+
+.submit-btn:hover {
+    transform: scale(0.96);
+}
+
+.submit-btn:active {
+    transform: scale(0.93);
+}

@@ -1,0 +1,88 @@
+.header{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background-color: #f0f4ff;
+}
+
+.bookmark-ribbon {
+  position: absolute;
+  right: 0;
+  width: 270px;
+  height: 31px;
+  background-color: #03045E;
+  clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  top: 6px;
+  letter-spacing: 1px;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.bookmark-text {
+  padding-left: 3rem;
+  font-size: 12px;
+}
+
+.bookmark-text a {
+  color: white;
+  margin-left: 22px;
+  font-size: 1rem;
+  align-items: center;
+  transition: color 0.3s ease;
+}
+
+.bookmark-text a:hover {
+  color: #FCA311;
+}
+
+
+.maimtLogo{
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 60px;
+}
+
+.heading-line{
+    position: absolute;
+    left: 179px;
+    color: #03045E;
+    font-weight: 600;
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    top: 15%;
+}
+
+.heading-line-fullform{
+  position: absolute;
+    left: 179px;
+    color: #03045E;
+    font-size: 12px;
+    font-family: 'Roboto', sans-serif;
+    top: 40%;
+}
+
+.contact-info{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    bottom: 11px;
+    right: 80px;
+    font-weight: 500;
+}
+
+.contact-info span{
+    color: #03045E;
+    margin: 30px;
+    margin-left: 11px;
+    font-weight: 500;
+}

@@ -1,0 +1,15 @@
+.footer-content {
+  width: 100%;
+  height: 60PX;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #03045E;
+  background-color: #f0f4ff;
+  font-weight: 500;
+  border-top: 0.1px solid #03045E;
+}
+
+.footer-content p{
+    margin-bottom: 0;
+}
