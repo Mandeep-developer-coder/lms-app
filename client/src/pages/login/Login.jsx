@@ -10,14 +10,10 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/authSlice';
-
 import './login.css';
 
 export const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -27,24 +23,41 @@ export const Login = () => {
       password: '',
     },
     validationSchema: Yup.object({
-      id: Yup.string().max(22, 'Password must be of less than 22 characters').required('Id is required'),
+      id: Yup.string().max(22, 'Id must be less than 22 characters').required('Id is required'),
       email: Yup.string().email('Invalid email address').required('Email is required'),
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
+
+    onSubmit: async (values, { resetForm }) => {
       try {
-        const response = await axios.post('http://localhost:5000/api/login', values);
-        toast.success(response.data.message);
-        dispatch(login(response.data.user));
-        navigate('/home');
-      } catch (error) {
-        if (error.response?.status === 401) {
-          setErrors({ password: 'Invalid email or password' });
+        const res = await axios.post("http://localhost:3000/auth/login", values);
+
+        if (res.data.success) {
+          const { user, token, message } = res.data;
+
+          // Save in localStorage
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+
+          toast.success(message);
+          resetForm();
+
+          if (user.role === "admin") {
+            navigate("/admin-dashboard");
+          } else {
+            navigate("/student-page");
+          }
+
         } else {
-          alert('Server Error. Please try again later.');
+          toast.error(res.data.message || "Login failed!");
         }
-      } finally {
-        setSubmitting(false);
+
+      } catch (err) {
+        if (err.response?.data?.message) {
+          toast.error(err.response.data.message);
+        } else {
+          toast.error("Something went wrong during login!");
+        }
       }
     },
   });
@@ -60,7 +73,7 @@ export const Login = () => {
             <Form.Group className="mb-3">
               <Form.Label>Admin/Student Id</Form.Label>
               <Form.Control
-                type="id"
+                type="text"
                 name="id"
                 placeholder="Enter your id"
                 value={formik.values.id}

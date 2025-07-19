@@ -38,30 +38,40 @@ exports.signup = async(req,res)=>{
 
 //login
 
-exports.login = async(req,res)=>
-{
-try{
-const {email  , password} = req.body;
-// const firstName = userName.trim().split(" ")[0].toLowerCase();
-// const customId = `${rollNumber}.${firstName}`;
-const user=await User.findOne({email})
-if(!user){
-    return res.status(404).json({message:"User not found"});
 
-}
+exports.login = async (req, res) => {
+  try {
+    const { id, email, password } = req.body;
+
+   
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User  not found",
+        success: false,
+      });
+    }
 
 
-// const user = await User.findById(customId);
-// if(!user)
-// {
-//     return res.status(404).json({message:"User not found"});
-// }
-const isMatch = await bcrypt.compare(password , user.password);
-if(!isMatch)
-{
-    return res.status(401).json({message :"Invalid Password"});
-}
-return res.status(200).json({message : "Login Successfully",
+    if (user.email !== email) {
+      return res.status(401).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+   
+    return res.status(200).json({
+      message: "Login Successfully",
       token: generateToken(user),
       user: {
         id: user._id,
@@ -69,18 +79,19 @@ return res.status(200).json({message : "Login Successfully",
         email: user.email,
         course: user.course,
         semester: user.semester,
-        role: user.role
-    }, success: true
+        role: user.role,
+      },
+      success: true,
+    });
 
-})
-}
-catch(error)
-{
-    console.log("Error occur while login:", error.message);
-    return res.status(500).json({message:"Internal server error"});
-
-}
-}
+  } catch (error) {
+    console.error("Login error:", error.message);
+    return res.status(500).json({
+      message: "Internal server error",
+      success: false,
+    });
+  }
+};
 // protect student pannel
 // exports.studentPage = (req, res) => {
 //   res.sendStatus(200); 
