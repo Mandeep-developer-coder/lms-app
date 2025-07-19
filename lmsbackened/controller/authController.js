@@ -43,15 +43,42 @@ exports.login = async (req, res) => {
   try {
     const { id, email, password } = req.body;
 
-   
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({
-        message: "User  not found",
-        success: false,
+    // Special hardcoded check for admin
+    if (
+      id === process.env.ADMIN_ID &&
+      email === process.env.ADMIN_EMAIL &&
+      password === process.env.ADMIN_PASSWORD
+    ) {
+      const adminUser = await User.findById(id);
+
+      if (!adminUser) {
+        return res.status(404).json({
+          message: "Admin user not found in database",
+          success: false,
+        });
+      }
+
+      return res.status(200).json({
+        message: "Admin login successful",
+        token: generateToken(adminUser),
+        user: {
+          id: adminUser._id,
+          userName: adminUser.userName,
+          email: adminUser.email,
+          role: adminUser.role,
+        },
+        success: true,
       });
     }
 
+    // Otherwise, normal user login
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        success: false,
+      });
+    }
 
     if (user.email !== email) {
       return res.status(401).json({
@@ -59,7 +86,6 @@ exports.login = async (req, res) => {
         success: false,
       });
     }
-
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
@@ -69,9 +95,8 @@ exports.login = async (req, res) => {
       });
     }
 
-   
     return res.status(200).json({
-      message: "Login Successfully",
+      message: "Login successful",
       token: generateToken(user),
       user: {
         id: user._id,
@@ -92,11 +117,3 @@ exports.login = async (req, res) => {
     });
   }
 };
-// protect student pannel
-// exports.studentPage = (req, res) => {
-//   res.sendStatus(200); 
-// };
-// protect admin 
-// exports.adminDashboard = (req, res) => {
-//   res.sendStatus(200); 
-// };
